@@ -1,26 +1,109 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Paleta exata do CLAUDE.md — calma, sem vermelhos saturados */
+  --background: #E8F4FA;
+  --foreground: #1A4F7A;
+
+  --card: #FFFFFF;
+  --card-foreground: #1A4F7A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1A4F7A;
+
+  /* Verde primário — botão de ação principal */
+  --primary: #7FB342;
+  --primary-foreground: #FFFFFF;
+
+  /* Azul — navegação (anterior/seguinte) */
+  --secondary: #85B7EB;
+  --secondary-foreground: #185FA5;
+
+  --muted: #C8DFF0;
+  --muted-foreground: #5A7A95;
+
+  /* Amarelo — ajuda */
+  --accent: #FAC775;
+  --accent-foreground: #854F0B;
+
+  --destructive: #E07060;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #BDD8EE;
+  --input: #BDD8EE;
+  --ring: #F7A072;
+
+  --radius: 1.25rem;
+
+  /* Tokens semânticos da app */
+  --coral: #F7A072;
+  --coral-soft: #FDDECE;
+  --sky-soft: #D9EEF8;
+  --mint-soft: #D1F0E2;
+  --sun-soft: #FEF3CC;
+  --ink: #1A4F7A;
+  --texto-suave: #5A7A95;
+  --verde: #7FB342;
+  --verde-borda: #3B6D11;
+  --azul: #85B7EB;
+  --azul-borda: #185FA5;
+  --amarelo: #FAC775;
+  --amarelo-borda: #854F0B;
 }
 
 @theme inline {
+  --font-sans: var(--font-quicksand), 'Quicksand', system-ui, sans-serif;
+  --font-display: var(--font-quicksand), 'Quicksand', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-coral: var(--coral);
+  --color-coral-soft: var(--coral-soft);
+  --color-sky-soft: var(--sky-soft);
+  --color-mint-soft: var(--mint-soft);
+  --color-sun-soft: var(--sun-soft);
+  --color-ink: var(--ink);
+  --color-texto-suave: var(--texto-suave);
+  --color-verde: var(--verde);
+  --color-verde-borda: var(--verde-borda);
+  --color-azul: var(--azul);
+  --color-azul-borda: var(--azul-borda);
+  --color-amarelo: var(--amarelo);
+  --color-amarelo-borda: var(--amarelo-borda);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
 }
