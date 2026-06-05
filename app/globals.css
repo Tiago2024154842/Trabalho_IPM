@@ -107,3 +107,88 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Animações suaves usadas no sistema de Ajuda. Respeitam prefers-reduced-motion. */
+@keyframes pulse-suave {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.02); }
+}
+
+@keyframes pulse-heroi {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+.animate-pulse-suave { animation: pulse-suave 2s ease-in-out infinite; }
+.animate-pulse-heroi { animation: pulse-heroi 3s ease-in-out infinite; }
+
+/* Animações do mini-jogo de ordenação */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(8px); }
+  30%      { transform: translateX(-8px); }
+  45%      { transform: translateX(6px); }
+  60%      { transform: translateX(-6px); }
+  75%      { transform: translateX(3px); }
+}
+
+@keyframes voo {
+  0%   { transform: scale(1); opacity: 1; }
+  30%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.6) translateY(-120px); opacity: 0; }
+}
+
+@keyframes bounce-suave {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes confetti-cair {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes estrela-bounce {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes estrela-brilho {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+
+@keyframes breathing {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.02); }
+}
+
+.animate-shake        { animation: shake 0.4s ease-in-out; }
+.animate-voo          { animation: voo 0.6s ease-out forwards; }
+.animate-bounce-suave { animation: bounce-suave 1.5s ease-in-out infinite; }
+.animate-confetti     { animation: confetti-cair 4s linear forwards; }
+.animate-estrela-in   { animation: estrela-bounce 0.5s ease-out forwards; }
+.animate-estrela-brilho { animation: estrela-brilho 2s ease-in-out infinite; }
+.animate-breathing    { animation: breathing 3s ease-in-out infinite; }
+
+/* Álbum de conquistas — flip de revelação */
+@keyframes flip-reveal {
+  0%   { transform: perspective(600px) rotateY(0deg); }
+  50%  { transform: perspective(600px) rotateY(180deg); }
+  100% { transform: perspective(600px) rotateY(360deg); }
+}
+.animate-flip-reveal { animation: flip-reveal 0.8s ease-in-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-suave,
+  .animate-pulse-heroi,
+  .animate-shake,
+  .animate-voo,
+  .animate-bounce-suave,
+  .animate-confetti,
+  .animate-breathing { animation: none; }
+  /* Manter fade simples para estrelas mesmo com reduced-motion */
+  .animate-estrela-in { animation: none; transform: scale(1); }
+  .animate-flip-reveal { animation: none; }
+}

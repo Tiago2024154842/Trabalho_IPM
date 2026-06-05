@@ -8,6 +8,8 @@ type ButtonHintProps = {
   tone: "blue" | "green" | "yellow"
   /** Make this hint visually larger/more prominent (e.g. for the main "Choose" action). */
   emphasis?: boolean
+  /** Mostra o botão "esbatido" (50% opacidade) quando a ação não está disponível neste ecrã. */
+  disabled?: boolean
 }
 
 /* Cores exatas do CLAUDE.md com sombra 3D que imita o botão físico. */
@@ -32,10 +34,16 @@ const toneClasses: Record<ButtonHintProps["tone"], { cap: string; ring: string; 
   },
 }
 
-export function ButtonHint({ label, icon, tone, emphasis = false }: ButtonHintProps) {
+export function ButtonHint({ label, icon, tone, emphasis = false, disabled = false }: ButtonHintProps) {
   const t = toneClasses[tone]
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div
+      className={cn(
+        "flex flex-col items-center gap-2 transition-opacity",
+        disabled && "opacity-50",
+      )}
+      aria-disabled={disabled || undefined}
+    >
       <div
         className={cn(
           "relative flex items-center justify-center rounded-full ring-8 transition-transform",

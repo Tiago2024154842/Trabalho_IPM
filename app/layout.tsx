@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Quicksand } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { EstrelasProvider } from "@/lib/estrelasContext"
 import "./globals.css"
 
 const quicksand = Quicksand({
@@ -13,7 +14,6 @@ export const metadata: Metadata = {
   title: "Missão Casa de Banho",
   description:
     "Aplicação de aprendizagem visual da casa de banho para crianças — passos calmos, ícones grandes e linguagem simples.",
-  generator: "v0.app",
 }
 
 export const viewport: Viewport = {
@@ -31,7 +31,9 @@ export default function RootLayout({
   return (
     <html lang="pt-PT" className={`${quicksand.variable} bg-background`}>
       <body className="font-sans antialiased">
-        {children}
+        <EstrelasProvider>
+          {children}
+        </EstrelasProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

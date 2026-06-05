@@ -11,9 +11,11 @@ type MissionCardProps = {
   inFocus?: boolean
   locked?: boolean
   lockedLabel?: string
+  /** Badge text shown in the top-right corner (e.g. "3/10"). */
+  badge?: string
 }
 
-const plateClasses: Record<MissionCardProps["plate"], string> = {
+const plateClasses: Record<NonNullable<MissionCardProps["plate"]>, string> = {
   "sky-soft": "bg-sky-soft",
   "mint-soft": "bg-mint-soft",
   "sun-soft": "bg-sun-soft",
@@ -28,6 +30,7 @@ export function MissionCard({
   inFocus = false,
   locked = false,
   lockedLabel,
+  badge,
 }: MissionCardProps) {
   return (
     <div
@@ -35,7 +38,7 @@ export function MissionCard({
       aria-label={title}
       aria-current={inFocus ? "true" : undefined}
       className={cn(
-        "relative flex flex-col h-full justify-between rounded-3xl bg-card p-5 transition-transform",
+        "relative flex flex-col h-full rounded-3xl bg-card px-5 pt-5 pb-4 transition-transform",
         "border-4 border-border/60 shadow-[0_6px_0_0_rgba(60,80,110,0.08)]",
         inFocus && "border-coral shadow-[0_8px_0_0_rgba(228,110,110,0.18)] -translate-y-1",
         locked && "opacity-95",
@@ -58,14 +61,21 @@ export function MissionCard({
         {number}
       </div>
 
+      {/* Badge (e.g. "3/10") */}
+      {badge && (
+        <div className="absolute left-4 top-4 z-10 rounded-full bg-[#FAC775] px-3 py-0.5 shadow-sm">
+          <span className="font-display text-xs font-bold text-white">{badge}</span>
+        </div>
+      )}
+
       {/* Illustration plate */}
       <div
         className={cn(
-          "relative mx-auto mt-2 flex aspect-square w-full items-center justify-center rounded-2xl",
+          "relative mx-auto mt-2 flex flex-1 min-h-0 w-full items-center justify-center rounded-2xl",
           plateClasses[plate],
         )}
       >
-        <div className="w-[78%]">{illustration}</div>
+        <div className="flex h-[78%] w-[78%] items-center justify-center">{illustration}</div>
 
         {locked && (
           <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-foreground/30 backdrop-blur-[1px]">
@@ -77,8 +87,8 @@ export function MissionCard({
       </div>
 
       {/* Title */}
-      <div className="flex flex-col items-center justify-center gap-2">
-        <h3 className="font-display text-2xl font-semibold text-ink leading-none md:text-3xl">
+      <div className="flex flex-col items-center justify-center gap-2 mt-3 shrink-0">
+        <h3 className="font-display text-2xl font-medium text-ink leading-none md:text-3xl">
           {title}
         </h3>
 
