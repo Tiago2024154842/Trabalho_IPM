@@ -6,6 +6,11 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/missao/[tipo]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/missao/[tipo]/page.js"
+    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -16,10 +21,40 @@
       "static/chunks/main-app.js",
       "static/chunks/app/missoes/page.js"
     ],
-    "/missao/[tipo]/page": [
+    "/missao/[tipo]/recompensa/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/missao/[tipo]/page.js"
+      "static/chunks/app/missao/[tipo]/recompensa/page.js"
+    ],
+    "/jogo/jogar/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/jogo/jogar/page.js"
+    ],
+    "/jogo/celebracao/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/jogo/celebracao/page.js"
+    ],
+    "/ajuda/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ajuda/page.js"
+    ],
+    "/ajuda/enviado/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ajuda/enviado/page.js"
+    ],
+    "/ajuda/demo/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ajuda/demo/page.js"
+    ],
+    "/ajuda/chamar/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ajuda/chamar/page.js"
     ]
   }
 }

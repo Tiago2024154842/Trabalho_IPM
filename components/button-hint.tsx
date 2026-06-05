@@ -10,6 +10,8 @@ type ButtonHintProps = {
   emphasis?: boolean
   /** Mostra o botão "esbatido" (50% opacidade) quando a ação não está disponível neste ecrã. */
   disabled?: boolean
+  /** Versão mais pequena — usada em ecrãs densos (ex.: jogo, com 5 botões). */
+  compact?: boolean
 }
 
 /* Cores exatas do CLAUDE.md com sombra 3D que imita o botão físico. */
@@ -34,28 +36,32 @@ const toneClasses: Record<ButtonHintProps["tone"], { cap: string; ring: string; 
   },
 }
 
-export function ButtonHint({ label, icon, tone, emphasis = false, disabled = false }: ButtonHintProps) {
+export function ButtonHint({ label, icon, tone, emphasis = false, disabled = false, compact = false }: ButtonHintProps) {
   const t = toneClasses[tone]
+  const tamanho = compact
+    ? emphasis ? "h-16 w-16" : "h-12 w-12"
+    : emphasis ? "h-20 w-20 md:h-24 md:w-24" : "h-16 w-16 md:h-18 md:w-18"
   return (
     <div
       className={cn(
-        "flex flex-col items-center gap-2 transition-opacity",
+        "flex flex-col items-center gap-1.5 transition-opacity",
         disabled && "opacity-50",
       )}
       aria-disabled={disabled || undefined}
     >
       <div
         className={cn(
-          "relative flex items-center justify-center rounded-full ring-8 transition-transform",
+          "relative flex items-center justify-center rounded-full transition-transform",
+          compact ? "ring-4" : "ring-8",
           t.ring,
-          emphasis ? "h-20 w-20 md:h-24 md:w-24" : "h-16 w-16 md:h-18 md:w-18",
+          tamanho,
         )}
         aria-hidden="true"
       >
         <div className={cn("absolute inset-0 rounded-full", t.cap, t.shadow)} />
         <div className="relative text-white">{icon}</div>
       </div>
-      <span className={cn("font-display text-sm font-semibold md:text-base", t.text)}>{label}</span>
+      <span className={cn("font-display font-semibold", t.text, compact ? "text-xs md:text-sm" : "text-sm md:text-base")}>{label}</span>
     </div>
   )
 }

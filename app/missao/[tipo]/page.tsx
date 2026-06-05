@@ -11,6 +11,7 @@ import { useBotoesFisicos } from '@/lib/teclado'
 import { useEstrelas } from '@/lib/estrelasContext'
 import { MISSOES, type TipoMissao } from '@/lib/missoes'
 import { iniciarChamada, terminarChamada } from '@/lib/notificacoesAjuda'
+import { useNarracao } from '@/lib/sons'
 
 const TOTAL_PASSOS = 6
 
@@ -76,6 +77,10 @@ export default function PassoMissao({ params }: { params: Promise<{ tipo: string
   }
 
   useBotoesFisicos({ onEscolher: avancar, onAnterior: recuar, onAjuda: pedirAjuda, onMenu: irParaMenu })
+
+  // Narração do passo: toca ao aparecer; se ficar parada, aos 30s lembra
+  // "clica no botão verde para avançar".
+  useNarracao(passoAtual.som, `${tipo}-${passo}`, 'avancar')
 
   const tituloMissao = missao.titulo === 'Lavar as Mãos'
     ? `Como ${missao.titulo.toLowerCase()}?`

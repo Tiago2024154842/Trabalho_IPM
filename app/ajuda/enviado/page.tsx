@@ -10,6 +10,7 @@ import { BotaoMenu } from '@/components/BotaoMenu'
 import { HeaderAjuda } from '@/components/HeaderAjuda'
 import { useBotoesFisicos } from '@/lib/teclado'
 import { obterChamada, terminarChamada } from '@/lib/notificacoesAjuda'
+import { useNarracao } from '@/lib/sons'
 
 function formatarTempo(s: number) {
   if (s < 60) return `Há ${s} segundos…`
@@ -20,6 +21,9 @@ function formatarTempo(s: number) {
 export default function AjudaEnviada() {
   const router = useRouter()
   const [segundos, setSegundos] = useState(0)
+
+  // Som de confirmação: a app já chamou um adulto (repete a cada 30s).
+  useNarracao('adulto')
 
   // Atualiza o contador de tempo a cada 10s.
   useEffect(() => {

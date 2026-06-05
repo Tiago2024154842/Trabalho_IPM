@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, use, useEffect } from 'react'
+import { useState, use } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, ArrowRight, Check, HelpCircle } from 'lucide-react'
 import Image from 'next/image'
@@ -12,6 +12,7 @@ import { useBotoesFisicos } from '@/lib/teclado'
 import { useEstrelas } from '@/lib/estrelasContext'
 import { MISSOES, type TipoMissao } from '@/lib/missoes'
 import { terminarChamada } from '@/lib/notificacoesAjuda'
+import { useNarracao } from '@/lib/sons'
 
 const ESTRELAS_POR_MISSAO: Record<TipoMissao, number> = {
   xixi: 3,
@@ -29,6 +30,10 @@ export default function Recompensa({ params }: { params: Promise<{ tipo: string 
 
   const [fase, setFase] = useState('recompensa') // 'recompensa' | 'convite'
   const [focoConvite, setFocoConvite] = useState(0) // 0 = Sim, 1 = Não
+
+  // Celebração na fase de recompensa; se ficar parada, aos 30s lembra
+  // "clica no botão verde para avançar".
+  useNarracao(fase === 'recompensa' ? 'boa' : undefined, fase, 'avancar')
 
   function voltarAoMenu() { terminarChamada(); router.push('/missoes') }
 
@@ -70,32 +75,33 @@ export default function Recompensa({ params }: { params: Promise<{ tipo: string 
             </div>
           </header>
 
-          <div className="flex flex-1 min-h-0 flex-col items-center justify-center gap-6">
-            <h1 className="font-display text-8xl font-bold text-[#2E4861] text-center leading-tight">
+          <div className="flex flex-1 min-h-0 flex-col items-center justify-center gap-3 md:gap-4">
+            <h1 className="font-display text-5xl md:text-6xl font-bold text-[#2E4861] text-center leading-tight">
               Parabéns! 🎉
             </h1>
 
             {missao && (
-              <p className="font-display text-3xl text-[#436076] text-center">
+              <p className="font-display text-xl md:text-2xl text-[#436076] text-center">
                 Completaste a missão{' '}
                 <span className="font-bold text-[#2E4861]">{missao.titulo}</span>!
               </p>
             )}
 
-            <div className="flex items-center gap-3 rounded-3xl bg-white/70 px-8 py-4 shadow-sm"
+            <div className="flex items-center gap-2 rounded-3xl bg-white/70 px-6 py-2.5 shadow-sm"
               role="status" aria-label={`Ganhaste ${estrelasGanhas} estrelas`}>
               {Array.from({ length: estrelasGanhas }).map((_, i) => (
-                <StarIcon key={i} className="h-14 w-14" />
+                <StarIcon key={i} className="h-9 w-9 md:h-11 md:w-11" />
               ))}
-              <span className="ml-3 font-display text-5xl font-bold text-[#2E4861]">+{estrelasGanhas}</span>
+              <span className="ml-2 font-display text-3xl md:text-4xl font-bold text-[#2E4861]">+{estrelasGanhas}</span>
             </div>
 
-            <Image src={heroi} alt="Herói a celebrar" className="h-64 w-auto object-contain drop-shadow-lg" />
+            <Image src={heroi} alt="Herói a celebrar"
+              className="min-h-0 flex-1 w-auto object-contain drop-shadow-lg" />
 
             <button onClick={() => setFase('convite')}
-              className="flex items-center gap-3 rounded-3xl border-4 border-coral bg-[#85CC97] px-12 py-4 shadow-[0_5px_0_0_#4E9966] transition-transform active:translate-y-1 active:shadow-none"
+              className="flex items-center gap-3 rounded-3xl border-4 border-coral bg-[#85CC97] px-10 py-2.5 shadow-[0_5px_0_0_#4E9966] transition-transform active:translate-y-1 active:shadow-none"
               aria-label="Continuar">
-              <span className="font-display text-3xl font-bold text-white">Continuar</span>
+              <span className="font-display text-2xl md:text-3xl font-bold text-white">Continuar</span>
             </button>
           </div>
         </div>

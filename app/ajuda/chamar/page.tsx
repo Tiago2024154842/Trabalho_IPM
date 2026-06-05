@@ -4,9 +4,13 @@ import { useRouter } from 'next/navigation'
 import { Bell } from 'lucide-react'
 import { BotaoMenu } from '@/components/BotaoMenu'
 import { useBotoesFisicos } from '@/lib/teclado'
+import { useNarracao } from '@/lib/sons'
 
 export default function EcraChamar() {
   const router = useRouter()
+
+  // Som de confirmação: a app está a chamar um adulto (repete a cada 30s).
+  useNarracao('adulto')
 
   useBotoesFisicos({
     onMenu: () => router.push('/missoes'),

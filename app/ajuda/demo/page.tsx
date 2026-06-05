@@ -16,12 +16,15 @@ import {
   terminarChamada,
 } from '@/lib/notificacoesAjuda'
 import { MISSOES, type TipoMissao } from '@/lib/missoes'
+import { useNarracao } from '@/lib/sons'
 
 /* ─── Definição dos passos de cada demonstração ─── */
 
 interface PassoDemo {
   imagem: string
   texto: string
+  /** Narração em /public/sons (sem extensão); opcional */
+  som?: string
   /** Se true, mostra countdown 3-2-1 depois do texto */
   countdown?: boolean
 }
@@ -30,6 +33,13 @@ type TipoDemo = 'naoseicomosefaz' | 'barriga' | 'papelcaiu'
 
 /* Fallback caso a imagem específica não exista */
 const HEROI_FALLBACK = '/herois/heroi1.png'
+
+/* Título fixo do problema (em cima) — distinto do texto do passo (no cartão). */
+const TITULO_DEMO: Record<TipoDemo, string> = {
+  naoseicomosefaz: 'Não sei como se faz',
+  barriga:         'Dói-me a barriga',
+  papelcaiu:       'O papel caiu',
+}
 
 function obterPassosDemo(tipo: TipoDemo, chamada: ReturnType<typeof obterChamada>): PassoDemo[] {
   if (tipo === 'naoseicomosefaz') {
@@ -41,22 +51,23 @@ function obterPassosDemo(tipo: TipoDemo, chamada: ReturnType<typeof obterChamada
     return [{
       imagem: passo?.imagem ?? HEROI_FALLBACK,
       texto: passo?.instrucao ?? 'Vê como se faz!',
+      som: passo?.som,
     }]
   }
 
   if (tipo === 'barriga') {
     return [
-      { imagem: HEROI_FALLBACK, texto: 'Senta-te na sanita e espera um bocadinho.' },
-      { imagem: HEROI_FALLBACK, texto: 'Faz festinhas na barriga e respira fundo.' },
-      { imagem: '/herois/heroi5.png', texto: 'Ainda dói? Vamos chamar a educadora.' },
+      { imagem: HEROI_FALLBACK, texto: 'Senta-te na sanita e espera um bocadinho.', som: 'espera_dor' },
+      { imagem: HEROI_FALLBACK, texto: 'Faz festinhas na barriga e respira fundo.', som: 'festinhas' },
+      { imagem: '/herois/heroi5.png', texto: 'Ainda dói? Vamos chamar a educadora.',  som: 'ainda_doi' },
     ]
   }
 
   // papelcaiu
   return [
-    { imagem: HEROI_FALLBACK, texto: 'Apanha o papel' },
-    { imagem: HEROI_FALLBACK, texto: 'Põe no lixo' },
-    { imagem: HEROI_FALLBACK, texto: 'Tira um bocadinho novo' },
+    { imagem: HEROI_FALLBACK, texto: 'Apanha o papel',        som: 'apanha' },
+    { imagem: HEROI_FALLBACK, texto: 'Põe no lixo',           som: 'poe_no_lixo' },
+    { imagem: HEROI_FALLBACK, texto: 'Tira um bocadinho novo', som: 'tira_papel' },
   ]
 }
 
@@ -238,6 +249,10 @@ function EcraDemo() {
     onMenu:     perguntaAtiva ? undefined : irParaMenu,
   })
 
+  // Narração do passo demonstrado; se ficar parada, aos 30s lembra
+  // "clica no botão verde para avançar".
+  useNarracao(faseFinal === 'demo' ? passoObj?.som : undefined, `${faseFinal}-${passoAtual}`, 'avancar')
+
   /* ─── Renderização da fase "Conseguiste?" ─── */
   if (faseFinal === 'celebrar') {
     return (
@@ -262,7 +277,7 @@ function EcraDemo() {
   if (faseFinal === 'pergunta') {
     return (
       <EcraPerguntaBinaria
-        imagemHeroi="/herois/heroi1_nobackground.png"
+        imagemHeroi="/herois/heroi1.png"
         pergunta="Conseguiste?"
         subtitulo="Se sim, boa! Se não, não faz mal."
         opcao1={{
@@ -309,7 +324,7 @@ function EcraDemo() {
         {/* Título + Progresso (centrado) */}
         <div className="flex flex-col items-center gap-3 shrink-0">
           <h2 className="font-display text-5xl font-bold text-[#1A4F7A] text-center">
-            {passoObj.texto}
+            {TITULO_DEMO[tipo]}
           </h2>
           <div className="flex items-center gap-3" aria-label={`Passo ${passoAtual + 1} de ${passos.length}`}>
             {passos.map((_, i) => (

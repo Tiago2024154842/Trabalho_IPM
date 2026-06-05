@@ -216,16 +216,16 @@ function JogoCelebracao() {
       </div>
 
       {/* Coluna de botões */}
-      <aside className="relative z-10 flex w-36 shrink-0 flex-col items-center justify-center gap-6 border-l border-white/30 bg-white/20 py-8 backdrop-blur-sm">
-        <ButtonHint tone="blue" label="Anterior"
+      <aside className="relative z-10 flex w-36 shrink-0 flex-col items-center justify-center gap-4 border-l border-white/30 bg-white/20 py-5 backdrop-blur-sm">
+        <ButtonHint compact tone="blue" label="Anterior"
           icon={<ArrowLeft className="h-7 w-7" strokeWidth={3} aria-hidden />} />
-        <ButtonHint tone="blue" label="Seguinte"
+        <ButtonHint compact tone="blue" label="Seguinte"
           icon={<ArrowRight className="h-7 w-7" strokeWidth={3} aria-hidden />} />
-        <ButtonHint tone="green" emphasis label="Escolher"
+        <ButtonHint compact tone="green" emphasis label="Escolher"
           icon={<Check className="h-10 w-10" strokeWidth={3.5} aria-hidden />} />
-        <ButtonHint tone="yellow" label="Ajuda" disabled
+        <ButtonHint compact tone="yellow" label="Ajuda" disabled
           icon={<HelpCircle className="h-7 w-7" strokeWidth={3} aria-hidden />} />
-        <BotaoMenu onClick={() => router.push('/missoes')} />
+        <BotaoMenu compact onClick={() => router.push('/missoes')} />
       </aside>
     </main>
   )

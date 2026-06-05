@@ -19,7 +19,7 @@ export function CaixaDestino({ numero, estado, imagem, instrucao }) {
       }
       className={cn(
         'relative flex flex-col items-center justify-center rounded-2xl transition-all duration-300',
-        'h-32 w-32 md:h-36 md:w-36 shrink-0',
+        'h-24 w-24 md:h-28 md:w-28 shrink-0',
         estado === 'vazia' && 'border-[3px] border-dashed border-[#D4D0C7] bg-[#F0F0F0]',
         estado === 'atual' && 'border-[3px] border-coral bg-[#FFF5EE] animate-pulse-suave',
         estado === 'preenchida' && 'border-[3px] border-[#7FB342] bg-[#E8F5E9]',
